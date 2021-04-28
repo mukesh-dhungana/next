@@ -8,4 +8,4 @@ function InternalServerError(props) {
     );
 }
 
-export default InternalServerError;This is 505 page
+export default InternalServerError;
