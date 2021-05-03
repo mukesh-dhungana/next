@@ -1,17 +1,8 @@
+import React from "react";
+
 function Error({ statusCode }) {
-    console.log('error')
-    return (
-      <p>
-        {statusCode
-          ? `An error ${statusCode} occurred on server`
-          : 'An error occurred on client'}
-      </p>
-    )
-  }
   
-  Error.getInitialProps = ({ res, err }) => {
-    const statusCode = res ? res.statusCode : err ? err.statusCode : 404
-    return { statusCode }
-  }
-  
-  export default Error
+  return <div>{statusCode} | This is custom error page</div>;
+}
+
+export default Error;

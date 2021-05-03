@@ -3,7 +3,7 @@ import React from 'react';
 function InternalServerError(props) {
     return (
         <div>
-            This is 500 page
+            Internal server error occured
         </div>
     );
 }

@@ -2,66 +2,61 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import Error from "./_error";
+import { useEffect } from "react";
 
-export default function Home({ user, statusCode }) {
-  // console.log(statusCode)
-  // if (statusCode === 500) {
-  //   // This line will show the default Error Page
-  //   return <Error statusCode={statusCode} />;
-  // }
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+// export default function Home(props) {
+//   // console.log(statusCode);
+//   // if (statusCode) {
+//   //   // This line will show the default Error Page
+//   //   return <Error statusCode={statusCode} />;
+//   // }
+//   return (
+//     <div className={styles.container}>
+//        This is home page
+//       <h1>{props.data.name}</h1>
+//     </div>
+//   );
+// }
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js</a>
-        </h1>
+// Home.getInitialProps = async (context) => {
+//   let res = await fetch("http://localhost:3000/api/hello");
+//   let data = await res.json();
+//   return {
+//     data,
+//   };
+// };
 
-        <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+import React, { Component } from "react";
 
-        <div className={styles.grid}>
-          <Link href={{ pathname: "/users", query: { id: 0 } }}>
-            <a>Go to Users page</a>
-          </Link>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  );
+class Home extends Component {
+  // static getInitialProps = async (context) => {
+  //   const { res } = context;
+  //   res.statusCode = 500;
+  //   let response = await fetch("http://localhost:3000/api/hello");
+  //   let data = await response.json();
+  //   return {
+  //     data,
+  //   };
+  // };
+  render() {
+    console.log(this.props.user);
+    return (
+      <div className={styles.container}>
+        This is home page
+        <h1>Hello {this.props.user.results[0].name.first}</h1>
+      </div>
+    );
+  }
 }
 
-Home.getInitialProps = async ({ query, res }) => {
-  const { id } = query;
-  //const user = users.find(u => u.id == id);
-  // The find method return undefined if the condition
-  // does not match
-  //if (!user) {
-  // here you can assume user is undefined that means
-  // it is an nonexistent user so change the status code
-  // of the response.
-  res.statusCode = 500;
-  const response = await fetch("http://localhost:3000/api/hello");
-  const user = response.json();
-  //}
+export default Home;
+
+export const getStaticProps = async (context) => {
+  let response = await fetch("https://randomuser.me/api/");
+  let data = await response.json();
+  console.log(data);
   return {
-    user: {},
-    statusCode: 500,
+    revalidate: 10,
+    props: { user: data },
   };
 };
