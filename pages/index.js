@@ -51,12 +51,14 @@ class Home extends Component {
 
 export default Home;
 
-export const getStaticProps = async (context) => {
-  let response = await fetch("https://randomuser.me/api/");
-  let data = await response.json();
-  console.log(data);
+export const getStaticProps = async(context)=>{
+  let response = await fetch('https://randomuser.me/api/');
+  let user = await response.json();
   return {
-    revalidate: 10,
-    props: { user: data },
-  };
-};
+    props:{
+       user,
+    },
+    //notFound : true,
+    revalidate : 10
+  }
+}
